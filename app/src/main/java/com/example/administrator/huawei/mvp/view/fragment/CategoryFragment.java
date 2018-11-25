@@ -1,4 +1,4 @@
-package com.example.administrator.huawei.fragment;
+package com.example.administrator.huawei.mvp.view.fragment;
 
 import android.os.SystemClock;
 import android.view.View;

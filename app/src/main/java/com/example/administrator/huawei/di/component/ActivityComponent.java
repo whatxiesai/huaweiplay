@@ -6,7 +6,7 @@ import android.content.Context;
 import com.example.administrator.huawei.di.module.ActivityModule;
 import com.example.administrator.huawei.di.scope.ContextLife;
 import com.example.administrator.huawei.di.scope.PerActivity;
-import com.example.administrator.huawei.view.HomeActivity;
+import com.example.administrator.huawei.mvp.view.HomeActivity;
 
 import dagger.Component;
 

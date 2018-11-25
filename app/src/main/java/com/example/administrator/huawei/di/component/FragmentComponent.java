@@ -6,9 +6,9 @@ import android.content.Context;
 import com.example.administrator.huawei.di.module.FragmentModuel;
 import com.example.administrator.huawei.di.scope.ContextLife;
 import com.example.administrator.huawei.di.scope.PerFragment;
-import com.example.administrator.huawei.fragment.CategoryFragment;
-import com.example.administrator.huawei.fragment.RecommendFragment;
-import com.example.administrator.huawei.fragment.TopFragment;
+import com.example.administrator.huawei.mvp.view.fragment.CategoryFragment;
+import com.example.administrator.huawei.mvp.view.fragment.RecommendFragment;
+import com.example.administrator.huawei.mvp.view.fragment.TopFragment;
 
 import dagger.Component;
 

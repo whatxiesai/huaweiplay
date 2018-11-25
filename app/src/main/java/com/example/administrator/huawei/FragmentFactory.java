@@ -1,10 +1,10 @@
 package com.example.administrator.huawei;
 
-import com.example.administrator.huawei.fragment.AppManagerFragment;
-import com.example.administrator.huawei.fragment.CategoryFragment;
-import com.example.administrator.huawei.fragment.MyFragment;
-import com.example.administrator.huawei.fragment.RecommendFragment;
-import com.example.administrator.huawei.fragment.TopFragment;
+import com.example.administrator.huawei.mvp.view.fragment.AppManagerFragment;
+import com.example.administrator.huawei.mvp.view.fragment.CategoryFragment;
+import com.example.administrator.huawei.mvp.view.fragment.MyFragment;
+import com.example.administrator.huawei.mvp.view.fragment.RecommendFragment;
+import com.example.administrator.huawei.mvp.view.fragment.TopFragment;
 
 import java.util.HashMap;
 import java.util.Map;

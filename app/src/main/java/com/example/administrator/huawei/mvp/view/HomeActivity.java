@@ -1,4 +1,4 @@
-package com.example.administrator.huawei.view;
+package com.example.administrator.huawei.mvp.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;

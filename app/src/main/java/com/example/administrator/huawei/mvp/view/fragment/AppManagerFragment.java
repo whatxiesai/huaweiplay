@@ -1,4 +1,4 @@
-package com.example.administrator.huawei.fragment;
+package com.example.administrator.huawei.mvp.view.fragment;
 
 import android.os.SystemClock;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.example.administrator.huawei.BaseFragment;
 import com.example.administrator.huawei.view.LoadingPaper;
 
-public class MyFragment extends BaseFragment {
+public class AppManagerFragment extends BaseFragment {
     @Override
     protected void load() {
         // 网络请求操作
