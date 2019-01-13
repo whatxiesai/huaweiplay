@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
 import java.lang.reflect.Field;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends RxAppCompatActivity {
 
     private static final String TAG = "BaseActivity";
     private ViewGroup title_bar;

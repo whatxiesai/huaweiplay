@@ -1,9 +1,10 @@
 package com.example.administrator.huawei.mvp.view.view;
 
 import com.example.administrator.huawei.base.mvpbase.BaseView;
+import com.example.administrator.huawei.bean.RecommendBean;
 
 public interface RecommendFragmentView extends BaseView {
 
-    void onRecommendDataSuccess();
-    void onRecommendDataError();
+    void onRecommendDataSuccess(RecommendBean recommendBean);
+    void onRecommendDataError(String msg);
 }

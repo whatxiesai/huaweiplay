@@ -13,6 +13,13 @@ import com.example.administrator.huawei.view.LoadingPaper;
 public abstract class BaseFragment extends Fragment {
 
     private LoadingPaper loadingPaper;
+    protected BaseActivity mActivity;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mActivity = (BaseActivity) getActivity();
+    }
 
     @Nullable
     @Override

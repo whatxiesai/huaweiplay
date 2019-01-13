@@ -1,14 +1,14 @@
 package com.example.administrator.huawei.mvp.view.fragment;
 
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.administrator.huawei.BaseFragment;
 import com.example.administrator.huawei.base.BaseMvpFragment;
 import com.example.administrator.huawei.base.mvpbase.BasePresenterImpl;
+import com.example.administrator.huawei.bean.RecommendBean;
 import com.example.administrator.huawei.mvp.presenter.impl.RecommendPresenterImpl;
 import com.example.administrator.huawei.mvp.view.view.RecommendFragmentView;
 import com.example.administrator.huawei.view.LoadingPaper;
@@ -16,6 +16,8 @@ import com.example.administrator.huawei.view.LoadingPaper;
 import javax.inject.Inject;
 
 public class RecommendFragment extends BaseMvpFragment<BasePresenterImpl> implements RecommendFragmentView {
+
+    private static final String TAG = "RecommendFragment";
 
     @Inject
     public RecommendPresenterImpl recommendPresenter;
@@ -29,14 +31,7 @@ public class RecommendFragment extends BaseMvpFragment<BasePresenterImpl> implem
     @Override
     protected void load() {
         // 网络请求操作
-        recommendPresenter.getRecommendData();
-//        new Thread(new Runnable() {
-//            @Override
-////            public void run() {
-////                SystemClock.sleep(2000);
-////                setState(LoadingPaper.LoadResult.success);
-////            }
-//        }).start();
+        recommendPresenter.getRecommendData(mActivity);
     }
 
     @Override
@@ -48,17 +43,19 @@ public class RecommendFragment extends BaseMvpFragment<BasePresenterImpl> implem
 
     @Override
     protected BasePresenterImpl initInjector() {
-        fragmentComponent.inject(this);
+        mFragmentComponent.inject(this);
         return recommendPresenter;
     }
 
     @Override
-    public void onRecommendDataSuccess() {
+    public void onRecommendDataSuccess(RecommendBean recommendBean) {
+        Log.i(TAG, recommendBean.getBannerList().size() + " ");
+        Log.i(TAG, recommendBean.getRecommendAppBeanList().size() + " ");
         setState(LoadingPaper.LoadResult.success);
     }
 
     @Override
-    public void onRecommendDataError() {
+    public void onRecommendDataError(String msg) {
         setState(LoadingPaper.LoadResult.error);
     }
 }
