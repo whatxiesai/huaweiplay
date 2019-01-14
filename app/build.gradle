@@ -33,4 +33,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.4'
     compile project(':rxretrofitlibrary')
+    compile project(':recyclerviewlibrary')
 }

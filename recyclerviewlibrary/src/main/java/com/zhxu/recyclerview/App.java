@@ -8,7 +8,8 @@ import android.app.Application;
  * @author xzhang
  */
 
-public class App extends Application {
+public class
+  App extends Application {
 
     private static App context ;
 
