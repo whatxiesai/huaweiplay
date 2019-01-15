@@ -39,4 +39,19 @@ public class RecommendPresenterImpl extends BasePresenterImpl<RecommendFragmentV
             }
         });
     }
+
+    @Override
+    public void getMoreRecommendData(BaseActivity baseActivity) {
+        recommendInteractor.loadRecommendData(baseActivity, new IGetDataDelegate<RecommendBean>() {
+            @Override
+            public void getDataSuccess(RecommendBean bean) {
+                mPresenterView.onMoreRecommendDataSuccess(bean);
+            }
+
+            @Override
+            public void getDataError(String msg) {
+                mPresenterView.onRecommendDataError(msg);
+            }
+        });
+    }
 }

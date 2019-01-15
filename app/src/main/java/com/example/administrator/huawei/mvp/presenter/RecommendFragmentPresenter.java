@@ -8,4 +8,5 @@ public interface RecommendFragmentPresenter extends BasePresenter<RecommendFragm
 
     void getRecommendData(BaseActivity activity);
 
+    void getMoreRecommendData(BaseActivity baseActivity);
 }

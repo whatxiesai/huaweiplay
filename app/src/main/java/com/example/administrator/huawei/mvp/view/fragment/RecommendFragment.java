@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.administrator.huawei.R;
 import com.example.administrator.huawei.adapter.RecommendAdapter;
@@ -19,6 +17,9 @@ import com.example.administrator.huawei.mvp.view.view.RecommendFragmentView;
 import com.example.administrator.huawei.util.UIUtils;
 import com.example.administrator.huawei.view.LoadingPaper;
 import com.zhxu.recyclerview.pullrefresh.PullToRefreshView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -38,6 +39,10 @@ public class RecommendFragment extends BaseMvpFragment<BasePresenterImpl> implem
 
     private RecommendBean recommendBean;
 
+    private List<RecommendBean.RecommendAppBean> appBeanList = new ArrayList<>();
+    private RecommendAdapter adapter;
+    private RecommendTopWrapper topWrapper;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -55,12 +60,25 @@ public class RecommendFragment extends BaseMvpFragment<BasePresenterImpl> implem
        View view = UIUtils.inflate(R.layout.fragment_recommend);
         ButterKnife.bind(this, view);
         mRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecommendAdapter adapter = new RecommendAdapter(getContext(), recommendBean.getRecommendAppBeanList());
-        RecommendTopWrapper topWrapper = new RecommendTopWrapper(getContext(), adapter);
+        adapter = new RecommendAdapter(getContext(), recommendBean.getRecommendAppBeanList());
+        topWrapper = new RecommendTopWrapper(getContext(), adapter);
         topWrapper.addData(recommendBean.getBannerList());
         mRv.setAdapter(topWrapper);
 
+        // 禁用下拉加载
+        ptr.setPullDownEnable(false);
+        ptr.setListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 下拉刷新
+            }
 
+            @Override
+            public void onLoadMore() {
+                // 上拉加载更多
+                recommendPresenter.getMoreRecommendData(mActivity);
+            }
+        });
         return view;
 
     }
@@ -74,7 +92,16 @@ public class RecommendFragment extends BaseMvpFragment<BasePresenterImpl> implem
     @Override
     public void onRecommendDataSuccess(RecommendBean recommendBean) {
         this.recommendBean = recommendBean;
+        appBeanList = recommendBean.getRecommendAppBeanList();
         setState(LoadingPaper.LoadResult.success);
+    }
+
+    @Override
+    public void onMoreRecommendDataSuccess(RecommendBean bean) {
+        adapter.clearData();
+        adapter.addDataAll(bean.getRecommendAppBeanList());
+        topWrapper.notifyDataSetChanged();
+        ptr.onFinishLoading();
     }
 
     @Override
