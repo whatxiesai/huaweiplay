@@ -140,26 +140,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.cn5.appstore.view.widget.EnterLayout
+            <com.example.administrator.huawei.view.widget.EnterLayout
                 android:id="@+id/install_manager_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/list_item_normal_selector" />
 
-            <com.cn5.appstore.view.widget.EnterLayout
+            <com.example.administrator.huawei.view.widget.EnterLayout
                 android:id="@+id/apk_manager_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/list_item_normal_selector" />
 
-            <com.cn5.appstore.view.widget.EnterLayout
+            <com.example.administrator.huawei.view.widget.EnterLayout
                 android:id="@+id/system_manager_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/list_item_normal_selector" />
 
 
-            <com.cn5.appstore.view.widget.EnterLayout
+            <com.example.administrator.huawei.view.widget.EnterLayout
                 android:id="@+id/connect_computer"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
