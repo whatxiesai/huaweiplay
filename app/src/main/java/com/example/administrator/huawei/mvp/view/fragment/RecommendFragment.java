@@ -15,7 +15,7 @@ import com.example.administrator.huawei.bean.RecommendBean;
 import com.example.administrator.huawei.mvp.presenter.impl.RecommendPresenterImpl;
 import com.example.administrator.huawei.mvp.view.view.RecommendFragmentView;
 import com.example.administrator.huawei.util.UIUtils;
-import com.example.administrator.huawei.view.LoadingPaper;
+import com.example.administrator.huawei.view.LoadingPager;
 import com.zhxu.recyclerview.pullrefresh.PullToRefreshView;
 
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class RecommendFragment extends BaseMvpFragment<BasePresenterImpl> implem
     public void onRecommendDataSuccess(RecommendBean recommendBean) {
         this.recommendBean = recommendBean;
         appBeanList = recommendBean.getRecommendAppBeanList();
-        setState(LoadingPaper.LoadResult.success);
+        setState(LoadingPager.LoadResult.success);
     }
 
     @Override
@@ -106,6 +106,6 @@ public class RecommendFragment extends BaseMvpFragment<BasePresenterImpl> implem
 
     @Override
     public void onRecommendDataError(String msg) {
-        setState(LoadingPaper.LoadResult.error);
+        setState(LoadingPager.LoadResult.error);
     }
 }

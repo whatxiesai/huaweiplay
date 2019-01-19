@@ -8,11 +8,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.example.administrator.huawei.BaseFragment;
 import com.example.administrator.huawei.R;
 import com.example.administrator.huawei.util.UIUtils;
 
-public abstract class LoadingPaper extends FrameLayout {
+public abstract class LoadingPager extends FrameLayout {
 
     /**
      * 默认状态
@@ -46,15 +45,15 @@ public abstract class LoadingPaper extends FrameLayout {
 
     private int state = STATE_UNKNOWN;
 
-    public LoadingPaper(@NonNull Context context) {
+    public LoadingPager(@NonNull Context context) {
         this(context, (AttributeSet)null);
     }
 
-    public LoadingPaper(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public LoadingPager(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public LoadingPaper(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public LoadingPager(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.state = 0;
         this.init();

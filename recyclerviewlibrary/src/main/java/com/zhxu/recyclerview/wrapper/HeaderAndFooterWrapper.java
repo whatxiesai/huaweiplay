@@ -110,7 +110,7 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         return position >= getHeadersCount() + getRealItemCount();
     }
 
-    public void addHeaderView(View view) {
+    public void       addHeaderView(View view) {
         int key = findHeaderKeyByView(view);
         if (key == -1) {
             mHeaderViews.put(mHeaderViews.size() + BASE_ITEM_TYPE_HEADER, view);

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.administrator.huawei.BaseFragment;
-import com.example.administrator.huawei.view.LoadingPaper;
+import com.example.administrator.huawei.view.LoadingPager;
 
 public class MyFragment extends BaseFragment {
     @Override
@@ -15,7 +15,7 @@ public class MyFragment extends BaseFragment {
             @Override
             public void run() {
                 SystemClock.sleep(2000);
-                setState(LoadingPaper.LoadResult.empty);
+                setState(LoadingPager.LoadResult.empty);
             }
         }).start();
     }

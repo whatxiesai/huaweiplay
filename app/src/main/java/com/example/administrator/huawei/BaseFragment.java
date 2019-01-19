@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.administrator.huawei.view.LoadingPaper;
+import com.example.administrator.huawei.view.LoadingPager;
 
 public abstract class BaseFragment extends Fragment {
 
-    private LoadingPaper loadingPaper;
+    private LoadingPager loadingPager;
     protected BaseActivity mActivity;
 
     @Override
@@ -24,8 +24,8 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (loadingPaper == null) {
-            loadingPaper = new LoadingPaper(getContext()) {
+        if (loadingPager == null) {
+            loadingPager = new LoadingPager(getContext()) {
                 @Override
                 protected View createSuccessView() {
                     return BaseFragment.this.createSuccessView();
@@ -38,18 +38,18 @@ public abstract class BaseFragment extends Fragment {
             };
         }
 
-        return loadingPaper;
+        return loadingPager;
     }
 
     public void show() {
-        if (loadingPaper != null) {
-            loadingPaper.show();
+        if (loadingPager != null) {
+            loadingPager.show();
         }
     }
 
-    public void setState(LoadingPaper.LoadResult result) {
-        if (loadingPaper != null) {
-            loadingPaper.setState(result);
+    public void setState(LoadingPager.LoadResult result) {
+        if (loadingPager != null) {
+            loadingPager.setState(result);
         }
     }
 
