@@ -39,7 +39,7 @@
         android:layout_marginRight="16.0dip"
         android:layout_toRightOf="@id/appicon">
 
-        <com.cn5.appstore.view.widget.DownloadProgressButton
+        <com.example.administrator.huawei.view.widget.DownloadProgressButton
             android:id="@+id/downbtn"
             style="@style/download_button"
             android:layout_width="60.0dip"
