@@ -1,68 +1,73 @@
 package com.example.administrator.huawei;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import com.example.administrator.huawei.mvp.view.HomeActivity;
+import com.example.administrator.huawei.util.ToastUtils;
 
-public class SplashActivity extends AppCompatActivity {
+import butterknife.BindView;
 
-    private static final int REQUEST_CODE_STORAGE = 1;
+public class SplashActivity extends BaseActivity {
+    @BindView(R.id.enter_button)
+    Button btn_go ;
 
-    private String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-    };
-
-    private SharedPreferences sp;
+    private SharedPreferences sp = null ;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initLayout() {
         setContentView(R.layout.activity_splash);
-        ButterKnife.bind(this);
-        sp = getSharedPreferences("appStore", Context.MODE_PRIVATE);
-        boolean isFirst = sp.getBoolean("isFirst", true);
-        if (!isFirst) {
-            goHome();
+    }
+
+    @Override
+    protected void initView() {
+
+        sp = getSharedPreferences("appStore",Context.MODE_PRIVATE);
+
+        if(!sp.getBoolean("isFirst",true)){
+            startActivity(new Intent(this,HomeActivity.class));
+            finish();
         }
-        verifyStoragePermission(this);
+
+
+        btn_go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sp.edit().putBoolean("isFirst",false).commit() ;
+                initPermission();
+            }
+        });
     }
 
-    @OnClick(R.id.enter_button)
-    public void goHome() {
-        sp.edit().putBoolean("isFirst", false).commit();
-        startActivity(new Intent(this, BaseActivity.class));
-        finish();
-    }
-
-    private void verifyStoragePermission(Activity activity) {
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permission != PermissionChecker.PERMISSION_GRANTED) {
-            // 没有权限，弹出对话框
-            ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_CODE_STORAGE);
+    private void initPermission() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED){
+                startActivity(new Intent(this,HomeActivity.class));
+                finish();
+            }else {
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},0);
+            }
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0] == PermissionChecker.PERMISSION_GRANTED) {
-            // 申请权限成功
-            Toast.makeText(this, "授权SD卡权限成功", Toast.LENGTH_SHORT);
-        } else {
-            // 申请权限失败
-            Toast.makeText(this, "授权SD卡权限失败，可能会影响用户的使用", Toast.LENGTH_SHORT);
+        if(grantResults[0] == PermissionChecker.PERMISSION_GRANTED){
+            ToastUtils.showToast("授权SD卡成功");
+
+        }else {
+            ToastUtils.showToast("没有授权SD卡，可能会影响应用的使用");
         }
+        startActivity(new Intent(this,HomeActivity.class));
+        finish();
     }
 }

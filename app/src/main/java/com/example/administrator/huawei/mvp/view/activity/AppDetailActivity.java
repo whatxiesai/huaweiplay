@@ -1,8 +1,12 @@
 package com.example.administrator.huawei.mvp.view.activity;
 
+import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
+import android.webkit.DownloadListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -11,15 +15,27 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.huawei.R;
+import com.example.administrator.huawei.adapter.AppDetailPagerAdapter;
 import com.example.administrator.huawei.base.BaseMvpActivity;
 import com.example.administrator.huawei.bean.AppDetailBean;
 import com.example.administrator.huawei.mvp.presenter.impl.AppDetailPresenterImpl;
+import com.example.administrator.huawei.mvp.view.fragment.AppCommentFragment;
+import com.example.administrator.huawei.mvp.view.fragment.AppIntroductionFragment;
+import com.example.administrator.huawei.mvp.view.fragment.AppRecommendFragment;
 import com.example.administrator.huawei.mvp.view.view.AppDetailActivityView;
 import com.example.administrator.huawei.util.UIUtils;
 import com.example.administrator.huawei.view.widget.DetailShareButton;
 import com.example.administrator.huawei.view.widget.DownloadProgressButton;
 import com.example.administrator.huawei.view.widget.SubTabNavigator;
+import com.zhxu.library.download.DownInfo;
+import com.zhxu.library.download.DownState;
+import com.zhxu.library.download.HttpDownManager;
+import com.zhxu.library.listener.HttpDownOnNextListener;
+import com.zhxu.library.listener.HttpOnNextListener;
+import com.zhxu.library.utils.DbDownUtil;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -71,6 +87,11 @@ public class AppDetailActivity extends BaseMvpActivity<AppDetailPresenterImpl> i
 
     private boolean expand = false ;
 
+    private HttpDownManager manager;
+    private DbDownUtil dbDownUtil;
+    private File outFile;
+    private DownInfo downInfo;
+
     @Inject
     public AppDetailPresenterImpl appDetailPresenter;
     private String packageName;
@@ -90,6 +111,12 @@ public class AppDetailActivity extends BaseMvpActivity<AppDetailPresenterImpl> i
     protected void initData() {
         packageName = getIntent().getStringExtra("packageName");
         appDetailPresenter.getAppDetaiData(this, packageName);
+        manager = HttpDownManager.getInstance();
+        dbDownUtil = DbDownUtil.getInstance();
+        downInfo = dbDownUtil.queryDownBy((long) packageName.hashCode());
+        if (downInfo == null) {
+            outFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), packageName + ".apk");
+        }
     }
 
     @Override
@@ -114,7 +141,97 @@ public class AppDetailActivity extends BaseMvpActivity<AppDetailPresenterImpl> i
 
         setLable();
         setSafeLable();
+        setSubTab();
+        setDownload();
     }
+
+    private void setDownload() {
+        if (downInfo == null) {
+            detail_download_button.setStartText("安装" + Formatter.formatFileSize(this, Long.parseLong(appDetailBean.getSize())));
+        } else {
+            if (downInfo.getState() == DownState.DOWN) {
+                detail_download_button.setState(DownloadProgressButton.STATUS_PROGRESS_BAR_DOWNLOADING);
+                downInfo.setListener(downloadListener);
+                manager.startDown(downInfo);
+            } else if (downInfo.getState() == DownState.PAUSE) {
+                detail_download_button.setState(DownloadProgressButton.STATUS_PROGRESS_BAR_PAUSE);
+            } else if (downInfo.getState() == DownState.FINISH) {
+                detail_download_button.setState(DownloadProgressButton.STATUS_PROGRESS_BAR_BEGIN);
+            }
+
+            detail_download_button.setProgress((int) ((100 *downInfo.getReadLength()) / downInfo.getCountLength() ));
+        }
+        detail_download_button.setStateChangeListener(new DownloadProgressButton.StateChangeListener() {
+            @Override
+            public void onPauseTask() {
+                Log.d(TAG, "onPauseTask: ");
+                manager.pause(downInfo);
+            }
+
+            @Override
+            public void onFinishTask() {
+                Log.d(TAG, "onFinishTask: ");
+            }
+
+            @Override
+            public void onLoadingTask() {
+                Log.d(TAG, "onLoadingTask: ");
+                if (downInfo == null) {
+                    downInfo = new DownInfo(appDetailBean.getDownloadUrl());
+                    downInfo.setListener(downloadListener);
+                    downInfo.setId((long) packageName.hashCode());
+                    downInfo.setSavePath(outFile.getAbsolutePath());
+                    downInfo.setState(DownState.START);
+                    dbDownUtil.save(downInfo);
+                }
+
+                if (downInfo.getState() != DownState.FINISH) {
+                    manager.startDown(downInfo);
+                }
+            }
+        });
+    }
+
+    private HttpDownOnNextListener downloadListener = new HttpDownOnNextListener() {
+
+        @Override
+        public void onNext(Object o) {
+
+        }
+
+        @Override
+        public void onStart() {
+
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+
+        @Override
+        public void updateProgress(long readLength, long countLength) {
+            int progress = (int) ((readLength * 100) / countLength);
+            detail_download_button.setProgress(progress);
+        }
+    };
+
+    private void setSubTab() {
+        subTabNavigator.setLeftText(appDetailBean.getTabInfoList().get(0));
+        subTabNavigator.setNoneText(appDetailBean.getTabInfoList().get(1));
+        subTabNavigator.setRightText(appDetailBean.getTabInfoList().get(2));
+
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new AppIntroductionFragment());
+        fragments.add(new AppCommentFragment());
+        fragments.add(new AppRecommendFragment());
+        AppDetailPagerAdapter adapter = new AppDetailPagerAdapter(getSupportFragmentManager());
+        adapter.setFragments(fragments);
+        mViewPager.setAdapter(adapter);
+        mViewPager.setOnPageChangeListener(subTabNavigator);
+        subTabNavigator.setViewPager(mViewPager);
+    }
+
 
     private void setSafeLable() {
         for(AppDetailBean.SafeLabel safeLabelsBean : appDetailBean.getSafeLabelList()){
@@ -169,5 +286,17 @@ public class AppDetailActivity extends BaseMvpActivity<AppDetailPresenterImpl> i
     @Override
     public void showToast(String msg) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dbDownUtil != null && downInfo != null) {
+            dbDownUtil.update(downInfo);
+        }
+    }
+
+    public String getAppPackageName() {
+        return packageName;
     }
 }

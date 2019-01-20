@@ -6,6 +6,7 @@ import android.content.Context;
 import com.example.administrator.huawei.di.module.FragmentModuel;
 import com.example.administrator.huawei.di.scope.ContextLife;
 import com.example.administrator.huawei.di.scope.PerFragment;
+import com.example.administrator.huawei.mvp.view.fragment.AppIntroductionFragment;
 import com.example.administrator.huawei.mvp.view.fragment.CategoryFragment;
 import com.example.administrator.huawei.mvp.view.fragment.RecommendFragment;
 import com.example.administrator.huawei.mvp.view.fragment.TopFragment;
@@ -27,4 +28,5 @@ public interface FragmentComponent {
     void inject(RecommendFragment recommendFragment);
     void inject(CategoryFragment categoryFragment);
     void inject(TopFragment topFragment);
+    void inject(AppIntroductionFragment fragment);
 }
