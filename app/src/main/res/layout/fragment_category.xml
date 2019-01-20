@@ -17,7 +17,7 @@
     </com.zhxu.recyclerview.layoutmanager.PullRecyclerViewGroup>
 
 
-    <com.example.administrator.huawei.mvp.view.view.ViewUpSearch
+    <com.example.administrator.huawei.view.widget.ViewUpSearch
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

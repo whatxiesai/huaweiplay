@@ -12,7 +12,7 @@ import com.example.administrator.huawei.bean.AppBean;
 import com.example.administrator.huawei.bean.TopBean;
 import com.example.administrator.huawei.mvp.presenter.impl.TopPresenterImpl;
 import com.example.administrator.huawei.mvp.view.view.TopFragmentView;
-import com.example.administrator.huawei.mvp.view.view.ViewUpSearch;
+import com.example.administrator.huawei.view.widget.ViewUpSearch;
 import com.example.administrator.huawei.util.UIUtils;
 import com.example.administrator.huawei.view.LoadingPager;
 import com.zhxu.recyclerview.section.SectionRVAdapter;

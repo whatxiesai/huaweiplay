@@ -1,4 +1,4 @@
-package com.example.administrator.huawei.mvp.view.view;
+package com.example.administrator.huawei.view.widget;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

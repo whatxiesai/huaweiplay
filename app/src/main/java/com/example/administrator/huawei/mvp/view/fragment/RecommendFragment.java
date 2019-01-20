@@ -1,5 +1,6 @@
 package com.example.administrator.huawei.mvp.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,9 +14,11 @@ import com.example.administrator.huawei.base.BaseMvpFragment;
 import com.example.administrator.huawei.base.mvpbase.BasePresenterImpl;
 import com.example.administrator.huawei.bean.RecommendBean;
 import com.example.administrator.huawei.mvp.presenter.impl.RecommendPresenterImpl;
+import com.example.administrator.huawei.mvp.view.activity.AppDetailActivity;
 import com.example.administrator.huawei.mvp.view.view.RecommendFragmentView;
 import com.example.administrator.huawei.util.UIUtils;
 import com.example.administrator.huawei.view.LoadingPager;
+import com.zhxu.recyclerview.adapter.MultiItemTypeAdapter;
 import com.zhxu.recyclerview.pullrefresh.PullToRefreshView;
 
 import java.util.ArrayList;
@@ -79,6 +82,16 @@ public class RecommendFragment extends BaseMvpFragment<BasePresenterImpl> implem
                 recommendPresenter.getMoreRecommendData(mActivity);
             }
         });
+
+        adapter.setAppItemClickListener(new RecommendAdapter.AppItemClickListener() {
+            @Override
+            public void goAppDetail(String packageName) {
+                Intent intent = new Intent(mActivity, AppDetailActivity.class);
+                intent.putExtra("packageName", packageName);
+                mActivity.startActivity(intent);
+            }
+        });
+
         return view;
 
     }

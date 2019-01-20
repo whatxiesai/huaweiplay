@@ -7,6 +7,7 @@ import com.example.administrator.huawei.di.module.ActivityModule;
 import com.example.administrator.huawei.di.scope.ContextLife;
 import com.example.administrator.huawei.di.scope.PerActivity;
 import com.example.administrator.huawei.mvp.view.HomeActivity;
+import com.example.administrator.huawei.mvp.view.activity.AppDetailActivity;
 
 import dagger.Component;
 
@@ -23,4 +24,5 @@ public interface ActivityComponent {
     Activity getActivity();
 
     void inject(HomeActivity homeActivity);
+    void inject(AppDetailActivity appDetailActivity);
 }

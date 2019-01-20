@@ -38,7 +38,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     // 初始化view
     protected abstract void initView();
 
-    private void setStatus() {
+    public void setStatus() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 状态栏透明
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
