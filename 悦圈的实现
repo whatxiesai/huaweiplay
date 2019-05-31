@@ -1,0 +1,18 @@
+参考悦动圈的实现项目
+
+1. 侧边栏的设置 drawerlayout
+   Drawerlayout页面设置两个layout，通过openDrawer和closeDrawer来实现第二个layout的显示和隐藏
+   NavagetionView通过headLayout和menu实现菜单的布局实现
+   参考hongyang的文章
+2. 导航栏和toolbar，下方这个图案提示，沉浸式状态栏的实现
+   ？状态栏，导航栏，toobar,actitonbar
+   各种theme属性的含义
+   http://yifeng.studio/2016/10/12/android-toolbar/
+   https://juejin.im/entry/56c86a1699a6ce005af6ac8b
+   https://www.jianshu.com/p/e2ae6aaff696
+3. viewpaper+fragment的实现
+   https://www.runoob.com/w3cnote/android-tutorial-viewpager.html
+4. gridLayout实现图片加文字
+5. recyview的实现
+
+6. 图片模块的实现怎么加载
